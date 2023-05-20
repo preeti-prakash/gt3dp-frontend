@@ -1,0 +1,101 @@
+<div *ngIf="products">
+  <p-table [value]="products">
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex p-ai-center p-jc-between" style="display: flex; justify-content: space-between;">
+        <h3>Products</h3>
+        <!-- <p-button (click)="goToAddNewProduct()" label="New" ></p-button> -->
+        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2"
+          (click)="openNewProductForm()"></button>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th pSortableColumn="pno">Product Number<p-sortIcon field="pno"></p-sortIcon>
+        </th>
+        <th pSortableColumn="pcategory">Product Category<p-sortIcon field="pcategory"></p-sortIcon>
+        </th>
+        <th pSortableColumn="pmodelname">Model Name<p-sortIcon field="pmodelname"></p-sortIcon>
+        </th>
+        <th pSortableColumn="pheight">Height<p-sortIcon field="pheight"></p-sortIcon>
+        </th>
+        <th pSortableColumn="pweight">Weight<p-sortIcon field="pweight"></p-sortIcon>
+        </th>
+        <th pSortableColumn="pwidth">Width<p-sortIcon field="pwidth"></p-sortIcon>
+        </th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="product"></p-tableCheckbox>
+        </td>
+        <td>{{product.pno}}</td>
+        <td>{{product.pcategory}}</td>
+        <td>{{product.pmodelname}}</td>
+        <td>{{product.pheight}}</td>
+        <td>{{ product.pweight }}</td>
+        <td>{{ product.pwidth }}</td>
+        <td>
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+            (click)="onEditClicked(product.pno)" [ngStyle]="{'margin-right':'8px'}"></button>
+          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+            (click)="deleteProduct(product)"></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        In total there are {{products ? products.length : 0 }} products.
+      </div>
+    </ng-template>
+    <!-- product form -->
+  </p-table>
+  <p-dialog header="New Product" [(visible)]="productDialog" [style]="{width: '50vw' , height:'35vw'}"
+    [baseZIndex]="10000" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+      <form [formGroup]="formcreateProduct" (ngSubmit)="onSubmit()">
+        <div class="field">
+          <label for="pno" class="block">Product Number:</label>
+          <input type="text" pInputText class="p-inputtext-sm" formControlName="pno">
+        </div>
+
+        <div class="field">
+          <label for="pcategory" class="block">Product Category:</label>
+          <input type="text" pInputText formControlName="pcategory">
+        </div>
+
+        <div class="field">
+          <label for="pmodelname" class="block">Product Model Name:</label>
+          <input type="text" pInputText formControlName="pmodelname">
+        </div>
+
+        <div class="field">
+          <label for="pheight" class="block">Product Height:</label>
+          <input type="text" pInputText formControlName="pheight">
+        </div>
+
+        <div class="field">
+          <label for="pweight" class="block">Product Weight:</label>
+          <input type="text" pInputText formControlName="pweight">
+        </div>
+
+        <div class="field">
+          <label for="pwidth" class="block">Product Width:</label>
+          <input type="text" pInputText formControlName="pwidth">
+        </div>
+
+        <div *ngIf="submitButton">
+          <p-button type="submit" [style]="{width: '10vw'}">Submit</p-button>
+        </div>
+        <div *ngIf="changeButton">
+          <p-button type="submit" [style]="{width: '10vw'}" (click)="clickUpdateButton()">Update</p-button>
+        </div>
+      </form>
+    </ng-template>
+  </p-dialog>\
+  <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
+</div>
