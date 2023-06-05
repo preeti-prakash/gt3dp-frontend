@@ -27,4 +27,8 @@ export class ProductService {
     console.log("request body", requestBody);
     return this.http.put(`http://localhost:8080/products/${id}`, requestBody);
   }
+
+  generateBarcode(id: any){
+    return this.http.get(`http://localhost:8080/barcode/${id}`);
+  }
 }

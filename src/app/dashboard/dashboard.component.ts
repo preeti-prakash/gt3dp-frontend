@@ -124,6 +124,15 @@ export class DashboardComponent {
     );
   }
   
+  onGenerateBarcode(product: any){
+    this.productService.generateBarcode(product.pno).subscribe(
+      () => {
+        this.fetchAllProducts();
+      },
+      error => {
+        console.log('DELETE API error:', error);
+      })
+  }
   
   
 
